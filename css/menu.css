@@ -1,0 +1,50 @@
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #0f172a;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* LOGO */
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    width: 160px;
+    border-radius: 50%;
+}
+
+/* MENÚ */
+.menu {
+    width: 100%;
+}
+
+.menu-item {
+    display: block;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #cbd5e1;
+    background: rgba(255,255,255,0.05);
+    transition: 0.3s;
+}
+
+/* Hover elegante */
+.menu-item:hover {
+    background: #38bdf8;
+    color: #0f172a;
+    transform: translateX(5px);
+}
+
+/* Activo */
+.menu-item.active {
+    background: #38bdf8;
+    color: #0f172a;
+    font-weight: bold;
+}
