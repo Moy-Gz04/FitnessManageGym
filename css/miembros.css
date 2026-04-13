@@ -1,0 +1,103 @@
+/* ============================= */
+/* 🔥 TABLA MIEMBROS FINAL LIMPIA */
+/* ============================= */
+
+.tabla-miembros {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* HEADER */
+.tabla-miembros thead {
+    background: linear-gradient(90deg, #020617, #0f172a);
+}
+
+.tabla-miembros th {
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #38bdf8;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* FILAS */
+.tabla-miembros tbody tr {
+    background: rgba(15, 23, 42, 0.85);
+    transition: 0.2s;
+}
+
+/* FILA PAR */
+.tabla-miembros tbody tr:nth-child(even) {
+    background: rgba(2, 6, 23, 0.85);
+}
+
+/* HOVER */
+.tabla-miembros tbody tr:hover {
+    background: rgba(56, 189, 248, 0.1);
+}
+
+/* CELDAS */
+.tabla-miembros td {
+    padding: 12px;
+    color: #e2e8f0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* EMAIL */
+.tabla-miembros td:nth-child(4) {
+    color: #38bdf8;
+}
+
+/* TELEFONO */
+.tabla-miembros td:nth-child(5) {
+    font-family: monospace;
+    color: #94a3b8;
+}
+
+/* ESTADO */
+.estado {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ACTIVO */
+.estado-verde {
+    background: rgba(34,197,94,0.2);
+    color: #22c55e;
+}
+
+/* VENCIDO */
+.estado-rojo {
+    background: rgba(239,68,68,0.2);
+    color: #ef4444;
+}
+
+/* BOTONES */
+.tabla-miembros td:last-child {
+    display: flex;
+    gap: 8px;
+}
+
+/* EDITAR */
+.btn-warning {
+    background: #facc15;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: 600;
+    color: black;
+}
+
+/* ELIMINAR */
+.btn-danger {
+    background: #ef4444;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: white;
+}

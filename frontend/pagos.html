@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Pagos</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/menu.css">
+<link rel="stylesheet" href="../css/pagos.css">
+
+</head>
+
+<body>
+
+<div class="d-flex">
+
+    <!-- SIDEBAR -->
+    <div id="sidebar-container"></div>
+
+    <!-- CONTENIDO -->
+    <div class="content">
+
+        <div class="pagos-wrapper">
+
+            <h2>Pagos</h2>
+
+            <!-- BUSCADOR -->
+            <div class="search-container">
+                <span class="icono">🔍</span>
+                <input type="text" id="buscarMiembro"
+                    placeholder="Buscar miembro...">
+            </div>
+
+            <!-- RESULTADOS -->
+            <div id="listaMiembros" class="resultados-card"></div>
+
+            <!-- TARJETA USUARIO -->
+            <div id="cardUsuario" class="user-card d-none">
+                <h4 id="nombreCompleto"></h4>
+                <p>ID: <span id="idUsuario"></span></p>
+            </div>
+
+            <!-- TIPOS DE PAGO -->
+            <div class="pagos-grid">
+
+                <button class="btn-pago" data-tipo="visita">Visita</button>
+                <button class="btn-pago" data-tipo="semana">Semana</button>
+                <button class="btn-pago" data-tipo="quincena">Quincena</button>
+                <button class="btn-pago" data-tipo="mensualidad">Mensualidad</button>
+
+            </div>
+
+            <!-- CONFIRMAR -->
+            <div class="confirmar-wrapper">
+                <button id="btnConfirmar" class="btn-confirmar">
+                    Confirmar pago
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../js/sidebar.js"></script>
+<script src="../js/pagos.js"></script>
+
+</body>
+</html>

@@ -1,97 +1,177 @@
-document.addEventListener("DOMContentLoaded", () => {
+let miembros = [];
+let miembroSeleccionado = null;
+let tipoPago = null;
 
-    const input = document.getElementById("buscarMiembro");
-    const card = document.getElementById("cardUsuario");
-    const panel = document.getElementById("panelPago");
-    const btnConfirmar = document.getElementById("btnConfirmar");
+// =============================
+// 🔹 CARGAR MIEMBROS
+// =============================
+async function cargarMiembros() {
+    try {
+        const res = await fetch("http://localhost:3000/miembros");
 
-    let tipoSeleccionado = null;
+        if (!res.ok) throw new Error("Error al cargar miembros");
 
-    // 🔥 USUARIOS SIMULADOS
-    const miembros = [
-        { id: "001", nombre: "Juan Pérez" },
-        { id: "002", nombre: "Carlos López" },
-        { id: "003", nombre: "María Hernández" },
-        { id: "004", nombre: "Luis García" }
-    ];
+        miembros = await res.json();
 
-    // 🔍 BUSCADOR
-    input.addEventListener("input", () => {
+        console.log("MIEMBROS:", miembros);
 
-        const texto = input.value.toLowerCase();
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
 
-        const encontrado = miembros.find(m =>
-            m.nombre.toLowerCase().includes(texto)
-        );
+cargarMiembros();
 
-        if (encontrado) {
 
-            document.getElementById("nombreCompleto").innerText = encontrado.nombre;
-            document.getElementById("idUsuario").innerText = encontrado.id;
+// =============================
+// 🔍 BUSCADOR
+// =============================
+document.getElementById("buscarMiembro").addEventListener("input", (e) => {
 
-            card.classList.remove("d-none");
-            panel.classList.remove("d-none");
+    const texto = e.target.value.toLowerCase();
+    const lista = document.getElementById("listaMiembros");
 
-            activarEventosPago(); // 👈 IMPORTANTE
+    lista.innerHTML = "";
 
-        } else {
+    if (texto.length < 2) return;
 
-            card.classList.add("d-none");
-            panel.classList.add("d-none");
+    const filtrados = miembros.filter(m =>
+        (m.nombres + " " + m.apellidos).toLowerCase().includes(texto)
+    );
 
-            resetPago();
+    filtrados.forEach(m => {
 
-        }
-
+        lista.innerHTML += `
+            <div class="p-2 border mb-1 item-miembro" data-id="${m.id}" style="cursor:pointer;">
+                ${m.nombres} ${m.apellidos}
+            </div>
+        `;
     });
 
-    // 🎯 ACTIVAR BOTONES DE PAGO
-    function activarEventosPago() {
+});
 
-        const botonesPago = document.querySelectorAll(".btn-pago");
 
-        botonesPago.forEach(btn => {
+// =============================
+// 🎯 SELECCIONAR MIEMBRO
+// =============================
+document.getElementById("listaMiembros").addEventListener("click", (e) => {
 
-            btn.onclick = () => {
+    if (!e.target.classList.contains("item-miembro")) return;
 
-                // Quitar selección previa
-                botonesPago.forEach(b => b.classList.remove("active"));
+    const id = e.target.dataset.id;
 
-                // Activar el actual
-                btn.classList.add("active");
+    const m = miembros.find(x => x.id == id);
 
-                tipoSeleccionado = btn.dataset.tipo;
+    if (!m) return;
 
-                // Activar botón confirmar
-                btnConfirmar.disabled = false;
-                btnConfirmar.classList.add("enabled");
+    miembroSeleccionado = m;
 
-            };
+    console.log("MIEMBRO SELECCIONADO:", m);
 
+    document.getElementById("cardUsuario").classList.remove("d-none");
+
+    document.getElementById("nombreCompleto").textContent =
+        m.nombres + " " + m.apellidos;
+
+    document.getElementById("idUsuario").textContent = m.id;
+
+    // limpiar lista
+    document.getElementById("listaMiembros").innerHTML = "";
+    document.getElementById("buscarMiembro").value = m.nombres;
+});
+
+
+// =============================
+// 💰 SELECCIONAR TIPO DE PAGO
+// =============================
+document.querySelectorAll(".btn-pago").forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        document.querySelectorAll(".btn-pago")
+            .forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        tipoPago = btn.dataset.tipo;
+
+        console.log("TIPO SELECCIONADO:", tipoPago);
+
+        validarFormulario();
+    });
+
+});
+
+
+// =============================
+// ✅ VALIDAR SI SE PUEDE CONFIRMAR
+// =============================
+function validarFormulario() {
+
+    const btn = document.getElementById("btnConfirmar");
+
+    if (miembroSeleccionado && tipoPago) {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
+    }
+}
+
+
+// =============================
+// 🚀 CONFIRMAR PAGO
+// =============================
+document.getElementById("btnConfirmar").addEventListener("click", async () => {
+
+    if (!miembroSeleccionado || !tipoPago) {
+        alert("Selecciona miembro y tipo de pago");
+        return;
+    }
+
+    console.log("ENVIANDO:", {
+        miembro_id: miembroSeleccionado.id,
+        tipo: tipoPago
+    });
+
+    try {
+
+        const res = await fetch("http://localhost:3000/pagos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                miembro_id: miembroSeleccionado.id,
+                tipo: tipoPago
+            })
         });
 
+        const data = await res.json().catch(() => ({}));
+
+        console.log("RESPUESTA:", data);
+
+        if (!res.ok) {
+            throw new Error(data.error || "Error en servidor");
+        }
+
+        alert(`Pago registrado\nMonto: $${data.monto || ""}\nDías: ${data.dias || ""}`);
+
+        // 🔄 RESET UI
+        miembroSeleccionado = null;
+        tipoPago = null;
+
+        document.getElementById("cardUsuario").classList.add("d-none");
+        document.getElementById("buscarMiembro").value = "";
+        document.getElementById("listaMiembros").innerHTML = "";
+
+        document.querySelectorAll(".btn-pago")
+            .forEach(b => b.classList.remove("active"));
+
+        validarFormulario();
+
+    } catch (error) {
+        console.error("ERROR:", error);
+        alert("Error al registrar pago");
     }
-
-    // 🔄 RESET SI CAMBIA EL USUARIO
-    function resetPago() {
-
-        tipoSeleccionado = null;
-
-        const botonesPago = document.querySelectorAll(".btn-pago");
-        botonesPago.forEach(b => b.classList.remove("active"));
-
-        btnConfirmar.disabled = true;
-        btnConfirmar.classList.remove("enabled");
-
-    }
-
-    // ✅ CONFIRMAR PAGO
-    btnConfirmar.addEventListener("click", () => {
-
-        if (!tipoSeleccionado) return;
-
-        alert("Pago registrado: " + tipoSeleccionado);
-
-    });
 
 });
