@@ -1,50 +1,413 @@
-/* SIDEBAR */
+/* ============================= */
+/* SIDEBAR ELEGANTE CLÁSICO */
+/* Premium, limpio y responsive */
+/* ============================= */
+
 .sidebar {
-    width: 250px;
+
+    width: var(--sidebar-width);
+
     height: 100vh;
-    background: #0f172a;
-    padding: 20px;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    z-index: 1000;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
+    overflow-y: auto;
+
+    padding: 24px 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(
+                in srgb,
+                var(--color-sidebar) 96%,
+                black 4%
+            ) 0%,
+            var(--color-sidebar) 100%
+        );
+
+    border-right:
+        1px solid rgba(255,255,255,0.05);
+
+    box-shadow:
+        6px 0 24px rgba(0,0,0,0.14);
 }
 
-/* LOGO */
-.logo-container {
-    margin-bottom: 20px;
+/* ============================= */
+/* TEXTURA */
+/* ============================= */
+
+.sidebar::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.02),
+            transparent 45%
+        );
+
+    pointer-events: none;
 }
+
+/* ============================= */
+/* SCROLL */
+/* ============================= */
+
+.sidebar::-webkit-scrollbar {
+
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,0.10);
+
+    border-radius: 10px;
+}
+
+/* ============================= */
+/* LOGO */
+/* ============================= */
+
+.logo-container {
+
+    width: 100%;
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+/* IMAGEN */
 
 .logo-container img {
-    width: 160px;
+
+    width: 155px;
+
+    max-width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
     border-radius: 50%;
+
+    padding: 4px;
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--color-primario) 70%,
+                white 30%
+            ),
+            var(--color-primario)
+        );
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.18);
+
+    transition: .25s ease;
 }
 
-/* MENÚ */
-.menu {
-    width: 100%;
+/* HOVER */
+
+.logo-container img:hover {
+
+    transform: scale(1.02);
 }
+
+/* TITULO */
+
+.logo-container h3 {
+
+    margin-top: 16px;
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    letter-spacing: -.4px;
+
+    word-break: break-word;
+}
+
+/* ============================= */
+/* MENU */
+/* ============================= */
+
+.menu {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+/* ============================= */
+/* ITEMS */
+/* ============================= */
 
 .menu-item {
-    display: block;
-    padding: 12px 15px;
-    margin: 10px 0;
-    border-radius: 10px;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 15px 18px;
+
+    border-radius: 14px;
+
     text-decoration: none;
-    color: #cbd5e1;
-    background: rgba(255,255,255,0.05);
-    transition: 0.3s;
+
+    color:
+        var(--color-texto-sidebar, #dbe7ff);
+
+    background:
+        rgba(255,255,255,0.04);
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    border:
+        1px solid rgba(255,255,255,0.03);
+
+    transition: .25s ease;
+
+    position: relative;
+
+    overflow: hidden;
 }
 
-/* Hover elegante */
+/* LINEA LATERAL */
+
+.menu-item::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 12%;
+    left: 0;
+
+    width: 4px;
+    height: 76%;
+
+    border-radius: 0 6px 6px 0;
+
+    background: transparent;
+
+    transition: .25s ease;
+}
+
+/* ============================= */
+/* HOVER */
+/* ============================= */
+
 .menu-item:hover {
-    background: #38bdf8;
-    color: #0f172a;
-    transform: translateX(5px);
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--color-primario) 78%,
+                transparent
+            ),
+            color-mix(
+                in srgb,
+                var(--color-primario) 58%,
+                transparent
+            )
+        );
+
+    color: white;
+
+    transform: translateX(4px);
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,0.14);
 }
 
-/* Activo */
+.menu-item:hover::before {
+
+    background: white;
+}
+
+/* ============================= */
+/* ACTIVO */
+/* ============================= */
+
 .menu-item.active {
-    background: #38bdf8;
-    color: #0f172a;
-    font-weight: bold;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-primario),
+            color-mix(
+                in srgb,
+                var(--color-primario) 72%,
+                black 28%
+            )
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.18);
+}
+
+/* LINEA ACTIVA */
+
+.menu-item.active::before {
+
+    background: white;
+}
+
+/* PUNTO ACTIVO */
+
+.menu-item.active::after {
+
+    content: "";
+
+    position: absolute;
+
+    right: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.95);
+}
+
+/* ============================= */
+/* ESPACIADO FINAL */
+/* ============================= */
+
+.menu::after {
+
+    content: "";
+
+    display: block;
+
+    height: 20px;
+
+    margin-top: 10px;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 992px) {
+
+    .sidebar {
+
+        width: 220px;
+
+        padding: 20px 14px;
+    }
+
+    .logo-container img {
+
+        width: 130px;
+    }
+
+    .logo-container h3 {
+
+        font-size: 19px;
+    }
+
+    .menu-item {
+
+        font-size: 15px;
+
+        padding: 13px 14px;
+    }
+}
+
+/* ============================= */
+/* MOBILE */
+/* Porque los humanos insisten */
+/* en usar pantallas del tamaño */
+/* de una calculadora científica */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+
+        width: 100%;
+
+        height: auto;
+
+        position: relative;
+
+        padding: 18px;
+    }
+
+    .menu {
+
+        gap: 8px;
+    }
+
+    .menu-item {
+
+        font-size: 14px;
+
+        padding: 12px 14px;
+    }
+
+    .logo-container img {
+
+        width: 110px;
+    }
+
+    .logo-container h3 {
+
+        font-size: 18px;
+    }
 }

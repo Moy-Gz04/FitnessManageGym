@@ -15,10 +15,10 @@ async function cargarDashboard() {
         document.getElementById("ingresosMes").textContent = "$" + data.ingresos;
         document.getElementById("miembrosTotal").textContent = data.total;
 
-        // 🔥 NUEVOS
+        // NUEVOS
         document.getElementById("nuevosMes").textContent = data.nuevos || 0;
 
-        // ⚠️ POR VENCER
+        // POR VENCER
         document.getElementById("porVencer").textContent = data.porVencer || 0;
 
     } catch (error) {
@@ -34,7 +34,15 @@ async function cargarGrafica() {
         const res = await fetch(`${API}/ingresos-anuales`);
         const data = await res.json();
 
-        // 📅 MESES (ya vienen listos del backend)
+        // Variables del tema
+        const rootStyles = getComputedStyle(document.documentElement);
+
+        const colorPrimario = rootStyles.getPropertyValue("--color-primario").trim();
+        const colorAcento = rootStyles.getPropertyValue("--color-acento").trim();
+        const colorTexto = rootStyles.getPropertyValue("--color-texto").trim();
+        const colorTextoSecundario = rootStyles.getPropertyValue("--color-texto-secundario").trim();
+
+        // Datos backend
         const labels = data.map(d => d.mes);
         const valores = data.map(d => d.total);
 
@@ -42,44 +50,46 @@ async function cargarGrafica() {
             grafica.destroy();
         }
 
-        grafica = new Chart(document.getElementById('grafica'), {
-            type: 'line',
+        grafica = new Chart(document.getElementById("grafica"), {
+            type: "line",
             data: {
                 labels,
                 datasets: [{
-                    label: 'Ingresos por Mes',
+                    label: "Ingresos por Mes",
                     data: valores,
-                    borderColor: '#38bdf8',
-                    backgroundColor: 'rgba(56,189,248,0.2)',
-                    pointBackgroundColor: '#38bdf8',
+                    borderColor: colorPrimario,
+                    backgroundColor: colorAcento,
+                    pointBackgroundColor: colorPrimario,
                     pointRadius: 5,
                     borderWidth: 3,
-                    tension: 0.4
+                    tension: 0.4,
+                    fill: true
                 }]
             },
             options: {
+                responsive: true,
                 plugins: {
                     legend: {
                         labels: {
-                            color: '#e2e8f0'
+                            color: colorTexto
                         }
                     }
                 },
                 scales: {
                     x: {
                         ticks: {
-                            color: '#cbd5e1'
+                            color: colorTexto
                         },
                         grid: {
-                            color: 'rgba(255,255,255,0.05)'
+                            color: "rgba(0,0,0,0.05)"
                         }
                     },
                     y: {
                         ticks: {
-                            color: '#cbd5e1'
+                            color: colorTexto
                         },
                         grid: {
-                            color: 'rgba(255,255,255,0.05)'
+                            color: "rgba(0,0,0,0.05)"
                         }
                     }
                 }
@@ -92,7 +102,7 @@ async function cargarGrafica() {
 }
 
 // ==============================
-// CARGAR ÚLTIMOS ACCESOS (MEJORADO)
+// CARGAR ÚLTIMOS ACCESOS
 // ==============================
 async function cargarAccesos() {
     try {
@@ -133,10 +143,25 @@ async function cargarAccesos() {
 }
 
 // ==============================
+// RECARGAR GRÁFICA SI CAMBIA TEMA
+// ==============================
+function observarCambiosTema() {
+    const observer = new MutationObserver(() => {
+        cargarGrafica();
+    });
+
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["style"]
+    });
+}
+
+// ==============================
 // INICIALIZAR TODO
 // ==============================
 document.addEventListener("DOMContentLoaded", () => {
     cargarDashboard();
     cargarGrafica();
     cargarAccesos();
+    observarCambiosTema();
 });

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Miembro</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ESTILOS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/registro-u.css">
+    <link rel="stylesheet" href="css/modales.css">
+
+    <!-- TEMA -->
+    <script src="js/theme-loader.js" defer></script>
+</head>
+
+<body>
+
+    <div class="d-flex">
+
+        <!-- SIDEBAR -->
+        <div id="sidebar-container"></div>
+
+        <!-- CONTENIDO -->
+        <div class="content">
+
+            <!-- TÍTULO -->
+            <h2 class="mb-4">
+                Registrar nuevo miembro
+            </h2>
+
+            <!-- FORMULARIO -->
+            <div class="form-container">
+
+                <form id="formMiembro">
+
+                    <!-- ============================= -->
+                    <!-- NOMBRES -->
+                    <!-- ============================= -->
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 mb-4">
+
+                            <label for="nombres">
+                                Nombre(s)
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="nombres"
+                                name="nombres"
+                                placeholder="Nombre(s)"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mb-4">
+
+                            <label for="apellidoPaterno">
+                                Apellido Paterno
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="apellidoPaterno"
+                                name="apellidoPaterno"
+                                placeholder="Apellido paterno"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-12 mb-4">
+
+                            <label for="apellidoMaterno">
+                                Apellido Materno
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="apellidoMaterno"
+                                name="apellidoMaterno"
+                                placeholder="Apellido materno"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- ============================= -->
+                    <!-- CONTACTO -->
+                    <!-- ============================= -->
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-4">
+
+                            <label for="telefono">
+                                Teléfono (opcional)
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="telefono"
+                                name="telefono"
+                                placeholder="Teléfono"
+                            >
+
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+
+                            <label for="correo">
+                                Correo (opcional)
+                            </label>
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="correo"
+                                name="correo"
+                                placeholder="Correo electrónico"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- ============================= -->
+                    <!-- FECHA + HUELLA + NFC -->
+                    <!-- ============================= -->
+
+                    <div class="row">
+
+                        <!-- FECHA -->
+                        <div class="col-md-4 mb-4">
+
+                            <label for="fechaNacimiento">
+                                Fecha de nacimiento
+                            </label>
+
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="fechaNacimiento"
+                                name="fechaNacimiento"
+                                required
+                            >
+
+                        </div>
+
+                        <!-- HUELLA -->
+                        <div class="col-md-4 mb-4">
+
+                            <label>
+                                Huella biométrica
+                            </label>
+
+                            <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
+
+                                <button
+                                    type="button"
+                                    id="btnHuella"
+                                    class="btn btn-warning"
+                                >
+                                    Capturar Huella
+                                </button>
+
+                                <span id="estadoHuella">
+                                    No registrada
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- NFC -->
+                        <div class="col-md-4 mb-4">
+
+                            <label>
+                                Tarjeta NFC
+                            </label>
+
+                            <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
+
+                                <button
+                                    type="button"
+                                    class="btn btn-info"
+                                    disabled
+                                >
+                                    Lector NFC Activo
+                                </button>
+
+                                <span id="estadoNFC">
+                                    No asignada
+                                </span>
+
+                                <!-- INPUT OCULTO PARA NFC -->
+                                <input
+                                    type="text"
+                                    id="nfcInput"
+                                    autocomplete="off"
+                                    style="
+                                        position: fixed;
+                                        top: -100px;
+                                        left: -100px;
+                                        width: 1px;
+                                        height: 1px;
+                                        opacity: 0;
+                                    "
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ============================= -->
+                    <!-- BOTÓN -->
+                    <!-- ============================= -->
+
+                    <div class="text-center mt-4">
+
+                        <button
+                            type="button"
+                            class="btn btn-success"
+                            id="btnRegistrar"
+                        >
+                            Registrar miembro
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================= -->
+    <!-- MODAL ÉXITO -->
+    <!-- ============================= -->
+
+    <div class="modal fade" id="modalExitoRegistro" tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content modal-dark modal-exito">
+
+                <div class="modal-body d-flex align-items-center gap-4">
+
+                    <div class="d-flex align-items-center gap-3 flex-grow-1">
+
+                        <div class="check-container">
+                            <div class="check-circle">
+                                ✓
+                            </div>
+                        </div>
+
+                        <h4 id="mensajeExitoRegistro" class="titulo-exito m-0">
+                            Miembro registrado correctamente
+                        </h4>
+
+                    </div>
+
+                    <button
+                        id="btnOkExito"
+                        class="btn btn-success btn-exito"
+                    >
+                        Aceptar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================= -->
+    <!-- MODAL ERROR -->
+    <!-- ============================= -->
+
+    <div class="modal fade" id="modalErrorRegistro" tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered modal-confirm-pro">
+
+            <div class="modal-content modal-dark text-center">
+
+                <div class="modal-body">
+
+                    <div class="error-container">
+
+                        <div class="error-circle">
+                            ✕
+                        </div>
+
+                    </div>
+
+                    <div id="mensajeErrorRegistro" class="texto-confirm"></div>
+
+                </div>
+
+                <div class="modal-footer justify-content-center">
+
+                    <button
+                        class="btn btn-danger btn-ok"
+                        data-bs-dismiss="modal"
+                    >
+                        OK
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DECORACIÓN -->
+    <div class="bg-glow"></div>
+
+    <!-- SCRIPTS -->
+    <script src="js/sidebar.js" defer></script>
+    <script src="js/registrar.js" defer></script>
+
+</body>
+
+</html>

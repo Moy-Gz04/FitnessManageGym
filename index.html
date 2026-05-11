@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Gym</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ESTILO GLOBAL -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- ESTILOS LOCALES -->
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!-- TEMA GLOBAL -->
+    <script src="js/theme-loader.js" defer></script>
+</head>
+
+<body>
+
+    <div class="d-flex">
+
+        <!-- SIDEBAR DINÁMICO -->
+        <div id="sidebar-container"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="content">
+
+            <!-- TÍTULO -->
+            <h2 class="mb-4">Dashboard</h2>
+
+            <!-- ============================= -->
+            <!-- MÉTRICAS PRINCIPALES -->
+            <!-- ============================= -->
+            <div class="row g-4">
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card stat">
+                        <h5>Miembros Activos</h5>
+                        <p id="activos">0</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card stat">
+                        <h5>Miembros Vencidos</h5>
+                        <p id="vencidos">0</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card stat">
+                        <h5>Ingresos del Mes</h5>
+                        <p id="ingresosMes">$0</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card stat">
+                        <h5>Total Miembros</h5>
+                        <p id="miembrosTotal">0</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================= -->
+            <!-- MÉTRICAS AVANZADAS -->
+            <!-- ============================= -->
+            <div class="row g-4 mt-2">
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card stat">
+                        <h5>Nuevos este mes</h5>
+                        <p id="nuevosMes">0</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="card stat">
+                        <h5>Por vencer (3 días)</h5>
+                        <p id="porVencer">0</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================= -->
+            <!-- CONTENIDO PRINCIPAL -->
+            <!-- ============================= -->
+            <div class="row mt-5 g-4">
+
+                <!-- GRÁFICA -->
+                <div class="col-lg-8">
+                    <div class="card p-4">
+                        <h4 class="mb-3">Comparación Ingresos (Anual)</h4>
+                        <canvas id="grafica"></canvas>
+                    </div>
+                </div>
+
+                <!-- ÚLTIMOS ACCESOS -->
+                <div class="col-lg-4">
+                    <div class="card p-4">
+                        <h4 class="mb-3">Últimos accesos</h4>
+
+                        <ul id="listaAccesos" class="list-unstyled mb-0">
+                            <!-- dinámico -->
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DECORACIÓN -->
+    <div class="bg-glow"></div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- SIDEBAR -->
+    <script src="js/sidebar.js" defer></script>
+
+    <!-- DASHBOARD -->
+    <script src="js/dashboard.js" defer></script>
+
+</body>
+
+</html>

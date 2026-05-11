@@ -1,0 +1,260 @@
+/* ============================= */
+/* BASE GLOBAL MODALES */
+/* ============================= */
+
+.modal-dark {
+  background: var(--color-superficie) !important;
+  color: var(--color-texto) !important;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.modal-dark .modal-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.modal-dark .modal-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.modal-dark .modal-footer {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.modal-dark .btn-close {
+  filter: invert(1);
+  opacity: 0.6;
+}
+
+
+/* ============================= */
+/* MODAL EDITAR (GRID PRO) */
+/* ============================= */
+
+.modal-editar-pro .modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+
+.modal-editar-pro .campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-editar-pro label {
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: var(--color-texto-secundario);
+}
+
+.modal-editar-pro .form-control {
+  background: var(--color-sidebar) !important;
+  color: var(--color-texto) !important;
+
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 10px;
+
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.modal-editar-pro .form-control[readonly] {
+  opacity: 0.6;
+  color: var(--color-texto-secundario) !important;
+}
+
+.modal-editar-pro .btn-guardar {
+  padding: 10px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+
+/* ============================= */
+/* MODAL CONFIRMAR */
+/* ============================= */
+
+.modal-confirm-pro {
+  border-radius: 16px;
+}
+
+.modal-confirm-pro .modal-header {
+  justify-content: center;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.modal-confirm-pro .modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+}
+
+.modal-confirm-pro .modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 20px;
+}
+
+.modal-confirm-pro .texto-confirm {
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 260px;
+  margin: 10px 0;
+}
+
+.modal-confirm-pro .modal-footer {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-confirm-pro .modal-footer .btn {
+  flex: 1;
+  font-size: 13px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+
+/* ============================= */
+/* MODAL ELIMINAR */
+/* ============================= */
+
+#modalEliminar .modal-body {
+  text-align: center;
+  padding: 20px;
+}
+
+#modalEliminar .modal-footer {
+  display: flex;
+  gap: 10px;
+}
+
+#modalEliminar .btn {
+  flex: 1;
+}
+
+
+/* ============================= */
+/* MODAL EXITO PRO */
+/* ============================= */
+
+.modal-exito .modal-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 24px;
+  text-align: left;
+}
+
+.modal-exito .check-container {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-exito .check-circle {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+  font-weight: bold;
+
+  background: rgba(25,135,84,0.15);
+  color: var(--color-exito);
+  border: 2px solid var(--color-exito);
+
+  animation: popIn 0.3s ease;
+}
+
+.modal-exito .titulo-exito {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-texto);
+}
+
+.modal-exito .btn-exito {
+  margin-top: 10px;
+  width: 180px;
+  padding: 10px;
+  border-radius: 10px;
+}
+/* ============================= */
+/* ICONO ERROR PRO */
+/* ============================= */
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.error-circle {
+  width: 80px;
+  height: 80px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 34px;
+  font-weight: bold;
+
+  color: var(--color-error);
+
+  border: 3px solid var(--color-error);
+
+  background: rgba(220,53,69,0.1);
+
+  animation: popIn 0.25s ease;
+}
+
+/* BOTÓN OK */
+.btn-ok {
+  width: 120px;
+  padding: 8px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+/* CENTRAR FOOTER */
+.modal-footer.justify-content-center {
+  justify-content: center !important;
+}
+
+.btn-exito {
+  width: auto;
+  min-width: 120px;
+}
+
+/* ============================= */
+/* ANIMACIÓN */
+/* ============================= */
+
+@keyframes popIn {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

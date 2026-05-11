@@ -1,0 +1,689 @@
+/* ============================= */
+/* RESET */
+/* ============================= */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================= */
+/* BODY */
+/* ============================= */
+
+body{
+
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    font-family: "Segoe UI", sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(0,255,255,.10),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #020617,
+            #07152d 45%,
+            #03111f
+        );
+
+    color: white;
+}
+
+/* ============================= */
+/* GLOW */
+/* ============================= */
+
+.bg-glow{
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(0,255,200,.08),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(0,180,255,.10),
+            transparent 25%
+        );
+}
+
+/* ============================= */
+/* LAYOUT */
+/* ============================= */
+
+.layout-acceso{
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+}
+
+/* ============================= */
+/* PANEL IZQUIERDO */
+/* ============================= */
+
+.panel-left{
+
+    width: 30%;
+
+    min-width: 340px;
+
+    border-right:
+        1px solid rgba(255,255,255,.08);
+
+    padding: 28px 24px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 22px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0,0,0,.20),
+            rgba(255,255,255,.02)
+        );
+
+    backdrop-filter: blur(12px);
+
+    overflow-y: auto;
+}
+
+/* ============================= */
+/* ICONO */
+/* ============================= */
+
+.top-icon{
+
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 52px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00f0ff,
+            #00d084
+        );
+
+    box-shadow:
+        0 0 25px rgba(0,255,255,.35);
+
+    flex-shrink: 0;
+}
+
+/* ============================= */
+/* TITULO */
+/* ============================= */
+
+.panel-left h1{
+
+    text-align: center;
+
+    font-size: 52px;
+
+    line-height: .95;
+
+    font-weight: 900;
+
+    letter-spacing: -2px;
+
+    margin: 0;
+}
+
+/* ============================= */
+/* SUBTEXTO */
+/* ============================= */
+
+.subtexto{
+
+    color: #9fb3d1;
+
+    font-size: 18px;
+
+    text-align: center;
+
+    margin-bottom: 10px;
+}
+
+/* ============================= */
+/* SCANNER */
+/* ============================= */
+
+.scanner-circle{
+
+    width: 100%;
+
+    max-width: 320px;
+
+    aspect-ratio: 1 / 1;
+
+    border-radius: 50%;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        10px solid rgba(0,255,180,.55);
+
+    box-shadow:
+        0 0 35px rgba(0,255,200,.15);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,255,255,.03),
+            transparent 70%
+        );
+
+    flex-shrink: 0;
+}
+
+/* CONTENIDO */
+
+.scanner-content{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 26px;
+}
+
+/* ICONOS */
+
+.scanner-item{
+
+    font-size: 72px;
+}
+
+/* DIVIDER */
+
+.scanner-divider{
+
+    width: 2px;
+    height: 90px;
+
+    background:
+        rgba(255,255,255,.2);
+}
+
+/* ============================= */
+/* STATUS */
+/* ============================= */
+
+.status-box{
+
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(0,0,0,.25);
+
+    border:
+        1px solid rgba(0,255,255,.14);
+
+    text-align: center;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #00e5ff;
+
+    word-break: break-word;
+}
+
+/* ============================= */
+/* BOTON */
+/* ============================= */
+
+.btn-escanear{
+
+    width: 100%;
+
+    max-width: 320px;
+
+    border: none;
+
+    padding: 18px 24px;
+
+    border-radius: 20px;
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00c853,
+            #00e676
+        );
+
+    transition: .25s ease;
+
+    box-shadow:
+        0 12px 30px rgba(0,255,120,.20);
+}
+
+.btn-escanear:hover{
+
+    transform: translateY(-3px);
+
+    filter: brightness(1.05);
+}
+
+/* ============================= */
+/* PANEL DERECHO */
+/* ============================= */
+
+.panel-right{
+
+    width: 70%;
+
+    padding: 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow-y: auto;
+}
+
+/* ============================= */
+/* MENSAJE */
+/* ============================= */
+
+.mensaje-acceso{
+
+    font-size: 52px;
+
+    font-weight: 900;
+
+    margin-bottom: 30px;
+
+    letter-spacing: -2px;
+
+    text-align: center;
+}
+
+/* AUTORIZADO */
+
+.autorizado{
+
+    color: #00ff99;
+
+    text-shadow:
+        0 0 20px rgba(0,255,150,.4);
+}
+
+/* DENEGADO */
+
+.denegado{
+
+    color: #ff4d6d;
+
+    text-shadow:
+        0 0 20px rgba(255,0,80,.3);
+}
+
+/* ============================= */
+/* CARD */
+/* ============================= */
+
+.miembro-card{
+
+    width: 100%;
+    max-width: 1250px;
+
+    padding: 45px;
+
+    border-radius: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 45px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.05),
+            rgba(255,255,255,.02)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+}
+
+/* ============================= */
+/* FOTO */
+/* ============================= */
+
+.foto-container{
+
+    flex-shrink: 0;
+}
+
+.foto-miembro{
+
+    width: 260px;
+    height: 260px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        10px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 0 40px rgba(0,0,0,.45);
+}
+
+/* ============================= */
+/* INFO */
+/* ============================= */
+
+.info-container{
+
+    flex: 1;
+}
+
+.info-container h2{
+
+    font-size: 72px;
+
+    line-height: .95;
+
+    font-weight: 900;
+
+    margin-bottom: 35px;
+
+    letter-spacing: -3px;
+
+    word-break: break-word;
+}
+
+/* ============================= */
+/* GRID */
+/* ============================= */
+
+.info-grid{
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 24px;
+}
+
+/* ============================= */
+/* CARD INFO */
+/* ============================= */
+
+.info-card{
+
+    padding: 28px;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    min-height: 160px;
+}
+
+/* LABEL */
+
+.label{
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #94a3b8;
+
+    margin-bottom: 14px;
+}
+
+/* VALOR */
+
+.valor{
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    line-height: 1.3;
+
+    word-break: break-word;
+}
+
+/* ============================= */
+/* ESTADO */
+/* ============================= */
+
+.estado-badge{
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 28px;
+
+    border-radius: 999px;
+
+    font-size: 26px;
+
+    font-weight: 900;
+}
+
+/* ACTIVO */
+
+.estado-activo{
+
+    background:
+        rgba(0,255,120,.15);
+
+    color: #00ff99;
+}
+
+/* VENCIDO */
+
+.estado-vencido{
+
+    background:
+        rgba(255,0,80,.14);
+
+    color: #ff4d6d;
+}
+
+/* ============================= */
+/* NFC INPUT */
+/* ============================= */
+
+#nfcInput{
+
+    position: fixed;
+
+    top: -100px;
+    left: -100px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 1600px){
+
+    .info-container h2{
+
+        font-size: 58px;
+    }
+
+    .mensaje-acceso{
+
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 1400px){
+
+    .panel-left h1{
+
+        font-size: 42px;
+    }
+
+    .scanner-circle{
+
+        max-width: 260px;
+    }
+
+    .scanner-item{
+
+        font-size: 58px;
+    }
+
+    .info-container h2{
+
+        font-size: 48px;
+    }
+
+    .foto-miembro{
+
+        width: 220px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 1200px){
+
+    .layout-acceso{
+
+        flex-direction: column;
+    }
+
+    .panel-left,
+    .panel-right{
+
+        width: 100%;
+    }
+
+    .panel-left{
+
+        min-width: unset;
+    }
+
+    .miembro-card{
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .info-grid{
+
+        grid-template-columns: 1fr;
+    }
+
+    .info-container h2{
+
+        font-size: 42px;
+    }
+}
+
+@media (max-height: 900px){
+
+    .panel-left{
+
+        gap: 16px;
+    }
+
+    .panel-left h1{
+
+        font-size: 38px;
+    }
+
+    .scanner-circle{
+
+        max-width: 220px;
+    }
+
+    .scanner-item{
+
+        font-size: 52px;
+    }
+
+    .btn-escanear{
+
+        font-size: 18px;
+
+        padding: 14px 20px;
+    }
+
+    .status-box{
+
+        font-size: 16px;
+    }
+}

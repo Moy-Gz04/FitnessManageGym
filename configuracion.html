@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración del Sistema</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ESTILO GLOBAL -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ESTILO SIDEBAR -->
+  <link rel="stylesheet" href="css/menu.css">
+
+  <!-- ESTILO LOCAL -->
+  <link rel="stylesheet" href="css/configuracion.css">
+
+  <!-- TEMA GLOBAL -->
+  <script src="js/theme-loader.js" defer></script>
+</head>
+<body>
+
+  <div class="d-flex">
+
+    <!-- SIDEBAR -->
+    <div id="sidebar-container"></div>
+
+    <!-- CONTENIDO -->
+    <div class="content">
+
+      <div class="config-container">
+
+        <!-- TÍTULO -->
+        <h1>Configuración General</h1>
+
+        <!-- FORMULARIO -->
+        <div class="config-form">
+
+          <!-- NOMBRE -->
+          <div class="form-group">
+            <label for="nombreGym">Nombre del Gimnasio</label>
+            <input
+              type="text"
+              id="nombreGym"
+              placeholder="Ej. Bull Gym Elite"
+            >
+          </div>
+
+          <!-- SUBIR LOGO -->
+          <div class="form-group">
+            <label for="logoFile">Subir Logo</label>
+            <input
+              type="file"
+              id="logoFile"
+              accept="image/*"  
+            >
+          </div>
+
+          <!-- SUBIR FONDO -->
+          <div class="form-group">
+            <label for="fondoFile">Subir Fondo</label>
+            <input
+              type="file"
+              id="fondoFile"
+              accept="image/*"
+            >
+          </div>
+
+          <!-- LOGO URL -->
+          <div class="form-group">
+            <label for="logoUrl">Logo URL (opcional)</label>
+            <input
+              type="url"
+              id="logoUrl"
+              placeholder="https://ejemplo.com/logo.png"
+            >
+          </div>
+
+          <!-- FONDO URL -->
+          <div class="form-group">
+            <label for="fondoUrl">Fondo URL (opcional)</label>
+            <input
+              type="url"
+              id="fondoUrl"
+              placeholder="https://ejemplo.com/fondo.jpg"
+            >
+          </div>
+
+          <!-- TEMA -->
+          <div class="form-group">
+            <label for="temaSelect">Seleccionar Tema</label>
+            <select
+              id="temaSelect"
+            ></select>
+          </div>
+
+          <!-- PREVIEW TEMAS -->
+          <div
+            id="temasPreview"
+            class="temas-preview"
+          ></div>
+
+          <!-- TEMA ACTUAL -->
+          <p
+            id="temaActual"
+            class="tema-actual"
+          >
+            Tema actual: Cargando...
+          </p>
+
+          <!-- MODO OSCURO -->
+          <div class="form-check-custom">
+            <label
+              for="modoOscuro"
+              class="checkbox-label"
+            >
+              <input
+                type="checkbox"
+                id="modoOscuro"
+              >
+              <span>Activar Modo Oscuro</span>
+            </label>
+          </div>
+
+          <!-- BOTONES -->
+          <div class="config-buttons">
+
+            <!-- GUARDAR -->
+            <button
+              id="guardarBtn"
+              type="button"
+            >
+              Guardar Configuración
+            </button>
+
+            <!-- RESET -->
+            <button
+              id="resetBtn"
+              type="button"
+              class="btn-reset"
+            >
+              Restaurar Configuración Predeterminada
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- PREVIEW -->
+        <div id="preview">
+
+          <h2>Vista previa</h2>
+
+          <div class="preview-card">
+
+            <p>
+              <strong>Nombre:</strong>
+              <span id="previewNombre">GYMNASIO</span>
+            </p>
+
+            <div class="preview-logo-wrapper">
+              <img
+                id="previewLogo"
+                src=""
+                alt="Logo Preview"
+              >
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div
+    id="toast"
+    class="toast-custom"
+  ></div>
+
+  <!-- LÓGICA -->
+  <script src="js/configuracion.js"></script>
+
+  <!-- SIDEBAR -->
+  <script src="js/sidebar.js"></script>
+
+</body>
+</html>
