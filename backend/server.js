@@ -7,6 +7,9 @@ const path = require("path");
 const fs = require("fs");
 const { Pool } = require("pg");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // =============================
 // ⚠️ MANEJO GLOBAL DE ERRORES
@@ -109,9 +112,180 @@ app.get("/", (req, res) => {
 });
 
 // =============================
+// 🔐 LOGIN
+// =============================
+
+app.post("/login", async (req, res) => {
+
+  try {
+
+    const {
+      usuario,
+      password
+    } = req.body;
+
+    // VALIDAR
+    if (!usuario || !password) {
+
+      return res.status(400).json({
+        error: "Completa todos los campos"
+      });
+
+    }
+
+    // BUSCAR USUARIO
+    const result = await pool.query(
+      `
+      SELECT *
+      FROM usuarios_sistema
+      WHERE usuario = $1
+      AND activo = true
+      `,
+      [usuario]
+    );
+
+    // NO EXISTE
+    if (result.rows.length === 0) {
+
+      return res.status(401).json({
+        error: "Usuario o contraseña incorrectos"
+      });
+
+    }
+
+    const usuarioDB = result.rows[0];
+
+    // COMPARAR PASSWORD
+    const coincide = await bcrypt.compare(
+      password,
+      usuarioDB.password_hash
+    );
+
+    if (!coincide) {
+
+      return res.status(401).json({
+        error: "Usuario o contraseña incorrectos"
+      });
+
+    }
+
+    // TOKEN
+    const token = jwt.sign(
+
+      {
+        id: usuarioDB.id,
+        nombre: usuarioDB.nombre,
+        usuario: usuarioDB.usuario,
+        rol: usuarioDB.rol
+      },
+
+      process.env.JWT_SECRET || "GYM_SECRET",
+
+      {
+        expiresIn: "8h"
+      }
+
+    );
+
+    // RESPUESTA
+    res.json({
+
+      mensaje: "Login correcto",
+
+      token,
+
+      usuario: {
+        id: usuarioDB.id,
+        nombre: usuarioDB.nombre,
+        usuario: usuarioDB.usuario,
+        rol: usuarioDB.rol
+      }
+
+    });
+
+  } catch (error) {
+
+    console.error("ERROR LOGIN:", error);
+
+    res.status(500).json({
+      error: "Error servidor"
+    });
+
+  }
+
+});
+
+// =============================
+// 🔐 VERIFICAR TOKEN
+// =============================
+
+function verificarToken(req, res, next) {
+
+  try {
+
+    const authHeader =
+      req.headers.authorization;
+
+    if (!authHeader) {
+
+      return res.status(401).json({
+        error: "Token requerido"
+      });
+
+    }
+
+    const token =
+      authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET || "GYM_SECRET"
+    );
+
+    req.usuario = decoded;
+
+    next();
+
+  } catch (error) {
+
+    return res.status(401).json({
+      error: "Token inválido"
+    });
+
+  }
+
+}
+
+// =============================
+// 👮 VERIFICAR ROL
+// =============================
+
+function verificarRol(...rolesPermitidos) {
+
+  return (req, res, next) => {
+
+    if (
+      !rolesPermitidos.includes(
+        req.usuario.rol
+      )
+    ) {
+
+      return res.status(403).json({
+        error: "Sin permisos"
+      });
+
+    }
+
+    next();
+
+  };
+
+}
+
+// =============================
 // 👥 OBTENER MIEMBROS
 // =============================
-app.get("/miembros", async (req, res) => {
+app.get("/miembros", verificarToken, async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM miembros ORDER BY id DESC");
     res.json(result.rows);

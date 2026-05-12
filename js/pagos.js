@@ -5,6 +5,36 @@ let miembroSeleccionado = null;
 let tipoPago = null;
 
 // =============================
+// 🔐 TOKEN
+// =============================
+
+const token =
+    localStorage.getItem("token");
+
+// NO LOGIN
+if (!token) {
+
+    window.location.href =
+        "index.html";
+
+}
+
+// HEADERS
+function obtenerHeaders() {
+
+    return {
+
+        "Content-Type":
+            "application/json",
+
+        Authorization:
+            `Bearer ${token}`
+
+    };
+
+}
+
+// =============================
 // 🔹 CARGAR MIEMBROS
 // =============================
 
@@ -14,19 +44,30 @@ async function cargarMiembros() {
 
         const res =
             await fetch(
-                "http://localhost:3000/miembros"
+                "http://localhost:3000/miembros",
+                {
+
+                    headers:
+                        obtenerHeaders()
+
+                }
             );
+
+        const data =
+            await res.json();
 
         if (!res.ok) {
 
             throw new Error(
+
+                data.error ||
                 "Error al cargar miembros"
+
             );
 
         }
 
-        miembros =
-            await res.json();
+        miembros = data;
 
         console.log(
             "MIEMBROS:",
@@ -41,9 +82,13 @@ async function cargarMiembros() {
         );
 
         mostrarModalPago(
+
             "Error",
+
             "No se pudieron cargar los miembros",
+
             true
+
         );
 
     }
@@ -73,7 +118,9 @@ document.getElementById(
         lista.innerHTML = "";
 
         if (texto.length < 2) {
+
             return;
+
         }
 
         const filtrados =
@@ -127,11 +174,15 @@ document.getElementById(
     (e) => {
 
         if (
+
             !e.target.classList.contains(
                 "item-miembro"
             )
+
         ) {
+
             return;
+
         }
 
         const id =
@@ -143,7 +194,9 @@ document.getElementById(
             );
 
         if (!m) {
+
             return;
+
         }
 
         miembroSeleccionado = m;
@@ -241,11 +294,12 @@ function validarFormulario() {
             "btnConfirmar"
         );
 
-    btn.disabled =
-        !(
-            miembroSeleccionado &&
-            tipoPago
-        );
+    btn.disabled = !(
+
+        miembroSeleccionado &&
+        tipoPago
+
+    );
 
 }
 
@@ -260,17 +314,24 @@ document.getElementById(
     async () => {
 
         if (
+
             !miembroSeleccionado ||
             !tipoPago
+
         ) {
 
             mostrarModalPago(
+
                 "Error",
+
                 "Selecciona miembro y tipo de pago",
+
                 true
+
             );
 
             return;
+
         }
 
         console.log(
@@ -295,12 +356,8 @@ document.getElementById(
 
                         method: "POST",
 
-                        headers: {
-
-                            "Content-Type":
-                                "application/json"
-
-                        },
+                        headers:
+                            obtenerHeaders(),
 
                         body:
                             JSON.stringify({
@@ -485,6 +542,7 @@ function mostrarModalPago(
 
         icono.style.border =
             "2px solid var(--color-exito)";
+
     }
 
     new bootstrap.Modal(

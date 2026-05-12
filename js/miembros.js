@@ -2,22 +2,69 @@ console.log("JS cargado");
 
 let miembroAEliminar = null;
 
-document.addEventListener("DOMContentLoaded", () => {
-  cargarMiembros();
-});
+// =============================
+// TOKEN Y HEADERS
+// =============================
+const token =
+  localStorage.getItem("token");
+
+if (!token) {
+
+  window.location.href =
+    "index.html";
+
+}
+
+function obtenerHeaders() {
+
+  return {
+
+    "Content-Type":
+      "application/json",
+
+    Authorization:
+      `Bearer ${token}`
+
+  };
+
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    cargarMiembros();
+
+  }
+);
 
 /* ============================= */
 /* CARGAR MIEMBROS */
 /* ============================= */
 async function cargarMiembros() {
+
   try {
-    const res = await fetch("http://localhost:3000/miembros");
+
+    const res = await fetch(
+      "http://localhost:3000/miembros",
+      {
+
+        headers: obtenerHeaders()
+
+      }
+    );
+
+    const data =
+      await res.json();
 
     if (!res.ok) {
-      throw new Error("Error en servidor");
-    }
 
-    const data = await res.json();
+      throw new Error(
+        data.error ||
+        "Error en servidor"
+      );
+
+    }
 
     const tabla =
       document.getElementById(
@@ -25,10 +72,13 @@ async function cargarMiembros() {
       );
 
     if (!tabla) {
+
       console.error(
         "No existe tablaMiembros"
       );
+
       return;
+
     }
 
     tabla.innerHTML = "";
@@ -36,10 +86,13 @@ async function cargarMiembros() {
     data.forEach((m) => {
 
       const estado =
+
         m.fecha_vencimiento &&
+
         new Date(
           m.fecha_vencimiento
         ) > new Date()
+
           ? "Activo"
           : "Vencido";
 
@@ -113,10 +166,7 @@ async function cargarMiembros() {
         </td>
       `;
 
-      // =============================
       // EVENTOS
-      // =============================
-
       tr.querySelector(
         ".btn-editar"
       ).addEventListener(
@@ -141,7 +191,9 @@ async function cargarMiembros() {
       "Error cargando miembros:",
       err
     );
+
   }
+
 }
 
 /* ============================= */
@@ -152,16 +204,25 @@ async function abrirEditar(id) {
   try {
 
     const res = await fetch(
-      `http://localhost:3000/miembros/${id}`
+      `http://localhost:3000/miembros/${id}`,
+      {
+
+        headers: obtenerHeaders()
+
+      }
     );
 
+    const m =
+      await res.json();
+
     if (!res.ok) {
+
       throw new Error(
+        m.error ||
         "Error al obtener miembro"
       );
-    }
 
-    const m = await res.json();
+    }
 
     document.getElementById(
       "editId"
@@ -190,14 +251,20 @@ async function abrirEditar(id) {
     document.getElementById(
       "editVencimiento"
     ).value =
+
       m.fecha_vencimiento
-        ? m.fecha_vencimiento.split("T")[0]
+
+        ? m.fecha_vencimiento
+            .split("T")[0]
+
         : "";
 
     new bootstrap.Modal(
+
       document.getElementById(
         "modalEditar"
       )
+
     ).show();
 
   } catch (err) {
@@ -206,149 +273,163 @@ async function abrirEditar(id) {
       "Error abriendo edición:",
       err
     );
+
   }
+
 }
 
 /* ============================= */
-/* ABRIR CONFIRMACIÓN */
+/* ABRIR CONFIRMACION */
 /* ============================= */
 window.abrirConfirmacion =
-  function () {
+function () {
 
-    const modalEditar =
-      bootstrap.Modal.getInstance(
-        document.getElementById(
-          "modalEditar"
-        )
-      );
+  const modalEditar =
 
-    if (modalEditar) {
-      modalEditar.hide();
-    }
+    bootstrap.Modal.getInstance(
+      document.getElementById(
+        "modalEditar"
+      )
+    );
 
-    setTimeout(() => {
+  if (modalEditar) {
 
-      new bootstrap.Modal(
-        document.getElementById(
-          "modalConfirmar"
-        )
-      ).show();
+    modalEditar.hide();
 
-    }, 200);
-  };
+  }
+
+  setTimeout(() => {
+
+    new bootstrap.Modal(
+      document.getElementById(
+        "modalConfirmar"
+      )
+    ).show();
+
+  }, 200);
+
+};
 
 /* ============================= */
 /* CONFIRMAR GUARDADO */
 /* ============================= */
 window.confirmarGuardar =
-  async function () {
+async function () {
 
-    try {
+  try {
 
-      const id =
-        document.getElementById(
-          "editId"
-        ).value;
+    const id =
+      document.getElementById(
+        "editId"
+      ).value;
 
-      const res = await fetch(
-        `http://localhost:3000/miembros/${id}`,
-        {
+    const res = await fetch(
+      `http://localhost:3000/miembros/${id}`,
+      {
 
-          method: "PUT",
+        method: "PUT",
 
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
+        headers:
+          obtenerHeaders(),
 
-          body: JSON.stringify({
+        body: JSON.stringify({
 
-            nombres:
-              document.getElementById(
-                "editNombre"
-              ).value,
+          nombres:
+            document.getElementById(
+              "editNombre"
+            ).value,
 
-            apellidos:
-              document.getElementById(
-                "editApellido"
-              ).value,
+          apellidos:
+            document.getElementById(
+              "editApellido"
+            ).value,
 
-            email:
-              document.getElementById(
-                "editEmail"
-              ).value,
+          email:
+            document.getElementById(
+              "editEmail"
+            ).value,
 
-            telefono:
-              document.getElementById(
-                "editTelefono"
-              ).value,
+          telefono:
+            document.getElementById(
+              "editTelefono"
+            ).value,
 
-            fecha_vencimiento:
-              document.getElementById(
-                "editVencimiento"
-              ).value
+          fecha_vencimiento:
+            document.getElementById(
+              "editVencimiento"
+            ).value
 
-          })
+        })
 
-        }
-      );
-
-      if (!res.ok) {
-        throw new Error(
-          "Error al actualizar"
-        );
       }
+    );
 
-      cerrarModal(
-        "modalConfirmar"
+    const data =
+      await res.json();
+
+    if (!res.ok) {
+
+      throw new Error(
+        data.error ||
+        "Error al actualizar"
       );
 
-      await cargarMiembros();
-
-      mostrarExito(
-        "Datos actualizados correctamente"
-      );
-
-    } catch (err) {
-
-      console.error(
-        "Error guardando:",
-        err
-      );
     }
-  };
+
+    cerrarModal(
+      "modalConfirmar"
+    );
+
+    await cargarMiembros();
+
+    mostrarExito(
+      "Datos actualizados correctamente"
+    );
+
+  } catch (err) {
+
+    console.error(
+      "Error guardando:",
+      err
+    );
+
+  }
+
+};
 
 /* ============================= */
 /* SEGUIR EDITANDO */
 /* ============================= */
 window.seguirEditando =
-  function () {
+function () {
 
-    cerrarModal(
-      "modalConfirmar"
-    );
+  cerrarModal(
+    "modalConfirmar"
+  );
 
-    new bootstrap.Modal(
-      document.getElementById(
-        "modalEditar"
-      )
-    ).show();
-  };
+  new bootstrap.Modal(
+    document.getElementById(
+      "modalEditar"
+    )
+  ).show();
+
+};
 
 /* ============================= */
 /* CANCELAR TODO */
 /* ============================= */
 window.cancelarTodo =
-  function () {
+function () {
 
-    cerrarModal(
-      "modalConfirmar"
-    );
+  cerrarModal(
+    "modalConfirmar"
+  );
 
-    cerrarModal(
-      "modalEditar"
-    );
-  };
+  cerrarModal(
+    "modalEditar"
+  );
+
+};
 
 /* ============================= */
 /* ELIMINAR */
@@ -364,7 +445,8 @@ function eliminarMiembro(
   const textoFecha =
     tr.children[8].innerText;
 
-  let fechaVencimiento = null;
+  let fechaVencimiento =
+    null;
 
   if (
     textoFecha &&
@@ -373,11 +455,14 @@ function eliminarMiembro(
 
     fechaVencimiento =
       new Date(
+
         textoFecha
           .split("/")
           .reverse()
           .join("-")
+
       );
+
   }
 
   const hoy =
@@ -395,6 +480,7 @@ function eliminarMiembro(
     ).show();
 
     return;
+
   }
 
   miembroAEliminar = id;
@@ -404,50 +490,64 @@ function eliminarMiembro(
       "modalEliminar"
     )
   ).show();
+
 }
 
 /* ============================= */
-/* CONFIRMAR ELIMINACIÓN */
+/* CONFIRMAR ELIMINACION */
 /* ============================= */
 window.confirmarEliminar =
-  async function () {
+async function () {
 
-    try {
+  try {
 
-      const res = await fetch(
-        `http://localhost:3000/miembros/${miembroAEliminar}`,
-        {
-          method: "DELETE"
-        }
-      );
+    const res = await fetch(
+      `http://localhost:3000/miembros/${miembroAEliminar}`,
+      {
 
-      if (!res.ok) {
-        throw new Error(
-          "Error al eliminar"
-        );
+        method: "DELETE",
+
+        headers:
+          obtenerHeaders()
+
       }
+    );
 
-      cerrarModal(
-        "modalEliminar"
+    const data =
+      await res.json();
+
+    if (!res.ok) {
+
+      throw new Error(
+        data.error ||
+        "Error al eliminar"
       );
 
-      await cargarMiembros();
-
-      mostrarExito(
-        "Miembro eliminado correctamente"
-      );
-
-    } catch (err) {
-
-      console.error(
-        "Error eliminando:",
-        err
-      );
     }
-  };
+
+    cerrarModal(
+      "modalEliminar"
+    );
+
+    await cargarMiembros();
+
+    mostrarExito(
+      "Miembro eliminado correctamente"
+    );
+
+  } catch (err) {
+
+    console.error(
+      "Error eliminando:",
+      err
+    );
+
+  }
+
+};
 
 /* ============================= */
-/* MODAL ÉXITO */
+/* MODAL EXITO */
 /* ============================= */
 function mostrarExito(
   mensaje
@@ -462,6 +562,7 @@ function mostrarExito(
       "modalExito"
     )
   ).show();
+
 }
 
 /* ============================= */
@@ -470,13 +571,17 @@ function mostrarExito(
 function cerrarModal(id) {
 
   const modal =
+
     bootstrap.Modal.getInstance(
       document.getElementById(id)
     );
 
   if (modal) {
+
     modal.hide();
+
   }
+
 }
 
 /* ============================= */
@@ -487,10 +592,13 @@ function formatearFecha(
 ) {
 
   if (!fecha) {
+
     return "-";
+
   }
 
   return new Date(
     fecha
   ).toLocaleDateString();
+
 }

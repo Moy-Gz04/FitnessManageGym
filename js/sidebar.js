@@ -26,7 +26,7 @@ async function cargarSidebar() {
 
                 <nav class="menu">
 
-    <a href="index.html" class="menu-item ${currentPage === "index.html" ? "active" : ""}">
+    <a href="dashboard.html" class="menu-item ${currentPage === "dashboard.html" ? "active" : ""}">
         📊 Dashboard
     </a>
 
